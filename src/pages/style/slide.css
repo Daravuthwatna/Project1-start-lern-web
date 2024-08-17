@@ -1,0 +1,12 @@
+.slide-web-style .ant-carousel .slick-dots li button::after {
+  background: #0099ff7e;
+  margin: 2px;
+}
+
+.menu-style .ant-menu-item {
+  color: white;
+}
+
+.menu-style .ant-menu-item:hover {
+  color: white !important;
+}
