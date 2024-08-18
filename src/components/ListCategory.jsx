@@ -5,12 +5,16 @@ import { Link } from "react-router-dom";
 
 const ListCategory = () => {
   const { allCategory } = useContext(ProductContext);
+
+  const handleTop = () => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" }); 
+  }
   
   return (
     <div className="container-fluid">
       <h1 className="mt-5 text-primary">Category</h1>
       <div className="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4 mt-1">
-        {allCategory.list && allCategory.list
+        {allCategory.listAll && allCategory.listAll
           .filter((category) => category.ParentsId == 0)
           .map((category) => (
             <div className="col" key={category.Id}>
@@ -26,8 +30,8 @@ const ListCategory = () => {
                   }}
                 />
                 <div className="card-body">
-                  <Link to={`/category/${category.Id}`}>
-                    <button className="btn btn-primary w-100 card-text">
+                  <Link to={`/category?categoryId=${category.Id}`}>
+                    <button onClick={handleTop} className="btn btn-primary w-100 card-text">
                       {category.Name}
                     </button>
                   </Link>

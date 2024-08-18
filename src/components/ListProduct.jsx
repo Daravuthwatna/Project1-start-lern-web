@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const ListProduct = () => {
   const { allProduct } = useContext(ProductContext);
   const handleTop =()=>{
-    window.scrollTo({top: 0, left: 0});
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }
 
   return (

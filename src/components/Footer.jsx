@@ -32,7 +32,7 @@ const Footer = () => {
                 .filter((category) => category.ParentsId == 0)
                 .map((category) => (
                   <li key={category.Id}>
-                    <Link className="text-dark nav-link" to={`/category/${category.Id}`}>
+                    <Link className="text-dark nav-link" to={`/category?categoryId=${category.Id}`}>
                       {category.Name}
                     </Link>
                   </li>

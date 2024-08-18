@@ -1,20 +1,31 @@
 /* eslint-disable no-unused-vars */
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { ProductContext } from "../context/ProductContext";
-import { Link } from "react-router-dom";
-import notFound from "../assets/no-product.png"
+import { Link, useSearchParams } from "react-router-dom";
+import notFound from "../assets/no-product.png";
 
 const DisCategory = () => {
   const { allCategory, allProduct } = useContext(ProductContext);
+  const [searchParams] = useSearchParams();
+  const categoryId = searchParams.get("categoryId");
   const [category, setCategory] = useState("");
-  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const defaultCategory = allCategory.list?.find(
+      (cat) => cat.ParentsId == categoryId && cat.ParentsName !== "None"
+    );
+    if (defaultCategory) {
+      handleCategoryClick(defaultCategory.Id);
+    }
+  }, [allCategory, categoryId]);
 
   const handleCategoryClick = (catId) => {
     setCategory(catId);
-    const products = allProduct.list.filter(
+    const filteredProducts = allProduct.list.filter(
       (product) => product.CategoryId === catId
     );
-    setFilteredProducts(products);
+    setProducts(filteredProducts);
   };
 
   return (
@@ -24,10 +35,10 @@ const DisCategory = () => {
           <ul className="list-group">
             {allCategory.list &&
               allCategory.list
-                .filter((cat) => cat.ParentsName !== "None")
+                .filter((cat) => cat.ParentsId == categoryId)
                 .map((cat) => (
                   <li
-                    className={`list-group-item text-center mb-3 ${cat.Id === category ? "active" : ""}`}
+                    className={`list-group-item text-center mb-3`}
                     key={cat.Id}
                     onClick={() => handleCategoryClick(cat.Id)}
                     style={{ cursor: "pointer" }}
@@ -39,8 +50,8 @@ const DisCategory = () => {
         </div>
         <div className="col-12 col-lg-10">
           <div className="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
-            {filteredProducts.length > 0 ? (
-              filteredProducts.map((product) => (
+            {products.length > 0 ? (
+              products.map((product) => (
                 <div className="col" key={product.Id}>
                   <div className="card h-100">
                     <img
@@ -79,14 +90,15 @@ const DisCategory = () => {
               ))
             ) : (
               <img
-              src={notFound}
-              className="card-img-top img-fluid"
-              style={{
-                width: "100%",
-                height: "23rem",
-                objectFit: "contain",
-              }}
-            />
+                src={notFound}
+                className="card-img-top img-fluid"
+                style={{
+                  width: "100%",
+                  height: "23rem",
+                  objectFit: "contain",
+                }}
+                alt="No products found"
+              />
             )}
           </div>
         </div>

@@ -38,7 +38,7 @@ const Navbar = () => {
               .filter((category) => category.ParentsId == 0)
               .map((category) => (
                 <li className="nav-item" key={category.Id}>
-                  <Link className="nav-link" to={`/category/${category.Id}`}>
+                  <Link className="nav-link" to={`/category?categoryId=${category.Id}`}>
                     {category.Name}
                   </Link>
                 </li>
