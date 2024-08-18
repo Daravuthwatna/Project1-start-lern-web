@@ -96,10 +96,10 @@ const DisProduct = () => {
           <div className="container mt-4 fw-bold">
             <div className="row">
               <div className="col-12 col-lg-6">
-                <button className="btn w-100 btn-danger">Add Cart</button>
+                <button className="btn w-100 mt-2 btn-danger">Add Cart</button>
               </div>
               <div className="col-12 col-lg-6">
-                <button className="btn w-100 btn-outline-primary">
+                <button className="btn w-100 mt-2 btn-outline-primary">
                   Buy Now
                 </button>
               </div>
