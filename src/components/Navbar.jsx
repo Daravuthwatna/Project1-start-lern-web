@@ -23,7 +23,7 @@ const Navbar = () => {
       <nav className="navbar navbar-expand-lg mb-5 navbar-light bg-light">
         <div className="container-fluid">
           <h2>
-            <Link className="nav-link text-primary" to={`/`}>
+            <Link className="nav-link text-primary" to={`/web`}>
               T-SALE.COM
             </Link>
           </h2>
@@ -51,7 +51,7 @@ const Navbar = () => {
                   <li className="nav-item" key={category.Id}>
                     <Link
                       className="nav-link"
-                      to={`/category?categoryId=${category.Id}`}
+                      to={`/web/category?categoryId=${category.Id}`}
                     >
                       {category.Name}
                     </Link>
@@ -59,7 +59,7 @@ const Navbar = () => {
                 ))}
             </ul>
             <div className="d-flex align-items-center">
-              <Link className="text-decoration-none" to={`/login`}>
+              <Link className="text-decoration-none" to={`/web/login`}>
                 <button className="btn btn-outline-primary">Login</button>
               </Link>
               <div className="d-flex input-group mx-3 w-auto">

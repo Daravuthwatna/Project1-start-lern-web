@@ -69,7 +69,7 @@ const DisCategory = () => {
                       <h5 className="card-title text-center">
                         {product.Name}
                       </h5>
-                      <Link to={`/product/${product.Id}`}>
+                      <Link to={`/web/product/${product.Id}`}>
                         <button className="btn btn-outline-primary w-100">
                           {product.DiscountAmount} $ OFF
                         </button>

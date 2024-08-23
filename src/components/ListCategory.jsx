@@ -30,7 +30,7 @@ const ListCategory = () => {
                   }}
                 />
                 <div className="card-body">
-                  <Link to={`/category?categoryId=${category.Id}`}>
+                  <Link to={`/web/category?categoryId=${category.Id}`}>
                     <button onClick={handleTop} className="btn btn-primary w-100 card-text">
                       {category.Name}
                     </button>

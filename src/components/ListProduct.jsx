@@ -17,7 +17,7 @@ const ListProduct = () => {
           allProduct.list.map((product) => (
             <div className="col" key={product.Id}>
               <div className="card h-100">
-                <Link to={`/product/${product.Id}`} onClick={handleTop}>
+                <Link to={`/web/product/${product.Id}`} onClick={handleTop}>
                   <img
                     src={`https://piseth.site/api/get-image/${product.images[0]}`}
                     className="card-img-top img-fluid"
@@ -31,7 +31,7 @@ const ListProduct = () => {
                 </Link>
                 <div className="card-body w-100">
                   <h5 className="card-title text-center">{product.Name}</h5>
-                  <Link to={`/product/${product.Id}`}>
+                  <Link to={`/web/product/${product.Id}`}>
                     <button className="btn btn-outline-primary w-100 card-text">
                       {product.DiscountAmount} $ OFF
                     </button>

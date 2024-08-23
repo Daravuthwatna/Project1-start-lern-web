@@ -32,7 +32,7 @@ const Footer = () => {
                 .filter((category) => category.ParentsId == 0)
                 .map((category) => (
                   <li key={category.Id}>
-                    <Link className="text-dark nav-link" to={`/category?categoryId=${category.Id}`}>
+                    <Link className="text-dark nav-link" to={`/web/category?categoryId=${category.Id}`}>
                       {category.Name}
                     </Link>
                   </li>
@@ -43,7 +43,7 @@ const Footer = () => {
       </div>
       <div className="text-center p-3 bg-light">
         © 2024 Copyright:{" "}
-          <Link className="=" to="/">
+          <Link className="=" to="/web">
           T-SALE.COM
         </Link>
       </div>
