@@ -1,4 +1,6 @@
 import axios from "axios";
+import LocalStorage from "../Utils/LocalStorage";
+import { message } from "antd";
 
 class BaseService {
   async sendRequest(url, data, method, extraHander = {}, extraConfig = {}) {
@@ -6,14 +8,14 @@ class BaseService {
       method: method,
       url: url,
       data: data,
-      headers: { ...extraHander },
+      headers: { Authorization: `bearre ${LocalStorage.getAccessToken()}`,...extraHander },
       ...extraConfig
     };
     try {
       const response = await axios(requestOptions);
       return response.data;
     } catch (error) {
-      console.error(error);
+      message.error(error?.response?.data?.errors.msg || error.message, [1]);
       return null;
     }
   }

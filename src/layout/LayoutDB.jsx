@@ -12,7 +12,8 @@ import {
 } from "@ant-design/icons";
 import { Button, Layout, Menu, theme } from "antd";
 import { Outlet, useNavigate } from "react-router-dom";
-import { getImageUrl } from "./Utils/Constant";
+import { getImageUrl } from "../Utils/Constant";
+import LocalStorage from "../Utils/LocalStorage";
 const { Header, Sider, Content } = Layout;
 
 const LayoutDB = () => {
@@ -97,7 +98,7 @@ const LayoutDB = () => {
               />
               <div className="d-flex align-items-center">
                 <span className="me-3">
-                  {JSON.parse(localStorage.getItem("user")).FirstName}
+                  {LocalStorage.getUser().FirstName +" "+LocalStorage.getUser().LastName}
                 </span>
                 <img
                   src={getImageUrl(

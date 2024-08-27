@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 import moment from "moment";
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { getGender, getRole } from "../../Utils/Constant";
+import { useEffect, useState } from "react";
+import { getGender, getRole } from "../../../../Utils/Constant";
+import baseService from "../../../../services/baseService";
 
 export const useEmployee = () => {
   const [fixdTop, setFixedTop] = useState(false);
@@ -94,5 +94,15 @@ export const useEmployee = () => {
       },
     ];
   };
+
+  const fetchData = async () => {
+    const response = await baseService.get("https://piseth.site/api/employee/get-list?pageSize=5&page=1");
+    console.log(response);
+  };
+
+  useEffect(()=>{
+    fetchData();
+  },[])
+
   return { columns, fixdTop, setFixedTop };
 };

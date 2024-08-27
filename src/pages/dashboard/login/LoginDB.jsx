@@ -2,9 +2,9 @@
 import React from "react";
 import { Button, Form, Input, message } from "antd";
 import { useNavigate } from "react-router-dom";
-import loginPNG from "../../assets/login-concept-illustration_11436.webp";
-import LocalStorage from "../Utils/LocalStorage";
-import baseService from "../../services/baseService";
+import loginPNG from "../../../assets/image/login-concept-illustration_11436.webp";
+import LocalStorage from "../../../Utils/LocalStorage";
+import baseService from "../../../services/baseService";
 
 const LoginDB = () => {
   const navigate = useNavigate();

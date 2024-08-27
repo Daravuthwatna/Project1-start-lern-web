@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
 import { Image, Table, Tag } from "antd";
-import { employee } from "../../assets/employee";
+import { employee } from "../../../data/employee";
 import { useEmployee } from "./Hook/useEmployee";
-import { getImageUrl, getStatus } from "../Utils/Constant";
+import { getImageUrl, getStatus } from "../../../Utils/Constant";
 import { Link } from "react-router-dom";
 
 const Employee = () => {

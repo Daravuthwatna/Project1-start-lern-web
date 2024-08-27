@@ -1,4 +1,4 @@
-import '../pages/style/ScrollUp.css'
+import '../assets/style/ScrollUp.css'
 
 const ScrollUp = () => {
   const handleScroll = () => {

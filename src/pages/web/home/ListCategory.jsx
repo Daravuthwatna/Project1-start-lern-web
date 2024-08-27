@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useContext } from "react";
-import { ProductContext } from "../context/ProductContext";
+import { ProductContext } from "../../../context/ProductContext";
 import { Link } from "react-router-dom";
 
 const ListCategory = () => {

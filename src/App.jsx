@@ -1,20 +1,22 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import Layout from "./Layout";
-import Home from "./pages/Home.jsx";
-import Product from "./pages/Product";
-import Category from "./pages/Category";
+import Layout from "./layout/LayoutWeb.jsx";
+import Home from "./pages/web/home/Home.jsx";
+import Product from "./pages/web/Product.jsx";
+import Category from "./pages/web/Category.jsx";
 
-import LayoutDB from "./dashboard/LayoutDB.jsx";
-import Dashboard from "./dashboard/Pages/Dashboard.jsx";
-import Employee from "./dashboard/Pages/Employee.jsx";
-import Customer from "./dashboard/Pages/Customer.jsx";
-import Products from "./dashboard/Pages/Product.jsx";
-import LoginDB from "./dashboard/Pages/LoginDB.jsx";
+import LayoutDB from "./layout/LayoutDB.jsx";
+import Dashboard from "./pages/dashboard/Dashboard.jsx";
+import Employee from "./pages/dashboard/employee/Employee.jsx";
+import Customer from "./pages/dashboard/customer/Customer.jsx";
+import Products from "./pages/dashboard/prodduct/Product.jsx";
+import LoginDB from "./pages/dashboard/login/LoginDB.jsx";
 
-import Error from "./pages/Error";
-import ErrorDB from "./dashboard/Pages/ErrorDB.jsx";
+import Error from "./pages/web/Error.jsx";
+import ErrorDB from "./pages/dashboard/ErrorDB.jsx";
+
+import "./services/AxiosIntercepter";
 
 const router = createBrowserRouter([
   {

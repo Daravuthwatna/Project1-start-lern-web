@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React, { useContext, useState, useEffect } from "react";
-import { ProductContext } from "../context/ProductContext";
+import { ProductContext } from "../../context/ProductContext";
 import { Link, useSearchParams } from "react-router-dom";
-import notFound from "../assets/no-product.png";
+import notFound from "../../assets/image/no-product.png";
 
 const DisCategory = () => {
   const { allCategory, allProduct } = useContext(ProductContext);

@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
-import ListCategory from "../components/ListCategory.jsx";
-import ListProduct from "../components/ListProduct.jsx";
-import Slide from "../components/slide.jsx";
-import ScrollUp from "../components/ScrollUp.jsx";
+import ListCategory from "./ListCategory.jsx";
+import ListProduct from "./ListProduct.jsx";
+import Slide from "../../../components/slide.jsx";
+import ScrollUp from "../../../components/ScrollUp.jsx";
 import { Skeleton } from "antd";
 
 const Home = () => {

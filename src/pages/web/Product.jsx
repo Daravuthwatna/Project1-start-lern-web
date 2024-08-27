@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState } from "react";
-import { ProductContext } from "../context/ProductContext";
+import { ProductContext } from "../../context/ProductContext";
 import { useParams } from "react-router-dom";
 import { Image } from "antd";
 import { Rate } from "antd";
-import ScrollUp from "../components/ScrollUp";
+import ScrollUp from "../../components/ScrollUp";
 import { Skeleton } from "antd";
 
 const DisProduct = () => {

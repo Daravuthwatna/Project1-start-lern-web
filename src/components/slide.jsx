@@ -1,13 +1,13 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import { Carousel, Col, Row } from "antd";
-import Slide1 from "../assets/BN2.png";
-import Slide2 from "../assets/BN5.png";
-import Slide3 from "../assets/BN7.png";
-import Slide4 from "../assets/BN8.png";
-import Small1 from "../assets/small (1).png"
-import Small2 from "../assets/small (2).png"
-import '../pages/style/slide.css';
+import Slide1 from "../assets/image/BN2.png";
+import Slide2 from "../assets/image/BN5.png";
+import Slide3 from "../assets/image/BN7.png";
+import Slide4 from "../assets/image/BN8.png";
+import Small1 from "../assets/image/small (1).png"
+import Small2 from "../assets/image/small (2).png"
+import '../assets/style/slide.css';
 
 const Slide = () => {
   return (
