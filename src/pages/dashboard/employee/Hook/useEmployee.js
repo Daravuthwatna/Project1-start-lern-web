@@ -1,13 +1,14 @@
 /* eslint-disable no-unused-vars */
 import moment from "moment";
 import { useEffect, useState } from "react";
-import { getGender, getRole } from "../../../../Utils/Constant";
 import baseService from "../../../../services/baseService";
 
 export const useEmployee = () => {
   const [fixdTop, setFixedTop] = useState(false);
+  const [dataList, setDataList] = useState([]);
+  const [openModel, setOpenModel] = useState(false);
 
-  const columns = ({ imageCustom, statusCostom, renderActions }) => {
+  const columns = ({ imageCustom, statusCostom, renderActions, openModel, setOpenModel }) => {
     return [
       {
         title: "Name",
@@ -24,21 +25,13 @@ export const useEmployee = () => {
         dataIndex: "Image",
         key: "1",
         width: 150,
-        render: (record, text, index) => imageCustom(text.Image),
+        render: (record, text, index) => imageCustom(text.eImage),
       },
       {
         title: "Gender",
         dataIndex: "Gender",
         key: "2",
         width: 150,
-        render: (text, record, index) => getGender[text],
-      },
-      {
-        title: "Role",
-        dataIndex: "RoleId",
-        key: "3",
-        width: 150,
-        render: (text, record, index) => getRole[text],
       },
       {
         title: "Date of Birth",
@@ -46,7 +39,7 @@ export const useEmployee = () => {
         key: "4",
         width: 150,
         render: (record, text, index) => {
-          return moment(text).format("MMM-Do-YYYY");
+          return moment(text.Dob).format("MMM-Do-YYYY");
         },
       },
       {
@@ -82,7 +75,7 @@ export const useEmployee = () => {
         key: "9",
         width: 150,
         render: (record, text, index) => {
-          return moment(text).format("MMM-Do-YYYY");
+          return moment(text.CreateAt).format("MMM-Do-YYYY");
         },
       },
       {
@@ -96,13 +89,13 @@ export const useEmployee = () => {
   };
 
   const fetchData = async () => {
-    const response = await baseService.get("https://piseth.site/api/employee/get-list?pageSize=5&page=1");
-    console.log(response);
+    const response = await baseService.get("http://localhost:8000/api/employee/get-list");
+    setDataList(response.data);
   };
 
   useEffect(()=>{
     fetchData();
   },[])
 
-  return { columns, fixdTop, setFixedTop };
+  return { columns, fixdTop, setFixedTop, dataList, openModel, setOpenModel };
 };

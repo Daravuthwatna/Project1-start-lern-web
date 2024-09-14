@@ -1,23 +1,26 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
+import React, { useState } from "react";
 import { Image, Table, Tag } from "antd";
-import { employee } from "../../../data/employee";
 import { useEmployee } from "./Hook/useEmployee";
 import { getImageUrl, getStatus } from "../../../Utils/Constant";
 import { Link } from "react-router-dom";
+import AddEmployee from "./components/addEmployee";
 
 const Employee = () => {
-  const { columns } = useEmployee();
+  const { columns, dataList, openModel, setOpenModel } = useEmployee();
+
   const imageCustom = (value) => {
     return <Image src={getImageUrl(value)} />;
   };
+
   const statusCostom = (value) => {
     return (
-      <Tag color={getStatus[value] === 1 ? "red" : "success"}>
+      <Tag color={getStatus[value] == 1 ? "red" : "green"}>
         {getStatus[value]}
       </Tag>
     );
   };
+
   const renderActions = (id) => {
     return (
       <div className="d-flex justify-content-center">
@@ -30,19 +33,33 @@ const Employee = () => {
       </div>
     );
   };
+
+  const showModal = () => {
+    setOpenModel(true);
+  };
+
   return (
-    <Table
-      columns={columns({
-        imageCustom: imageCustom,
-        statusCostom: statusCostom,
-        renderActions: renderActions
-      })}
-      dataSource={employee.list}
-      scroll={{
-        x: 1500,
-        y: 600,
-      }}
-    />
+    <>
+      <h1>Employee List</h1>
+      <div className="mb-3">
+        <button className="btn btn-primary" onClick={showModal}>
+          Add Employee
+        </button>
+      </div>
+      <AddEmployee openModel={openModel} setOpenModel={setOpenModel} />
+      <Table
+        columns={columns({
+          imageCustom: imageCustom,
+          statusCostom: statusCostom,
+          renderActions: renderActions,
+        })}
+        dataSource={dataList}
+        scroll={{
+          x: 1500,
+          y: 600,
+        }}
+      />
+    </>
   );
 };
 
