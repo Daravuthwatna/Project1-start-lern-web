@@ -18,7 +18,12 @@ const Employee = () => {
   } = useEmployee();
 
   const imageCustom = (value) => {
-    return <Image style={{width: "100px" , height: "150px", objectFit: "cover"}} src={getImageLocalHost(value)} />;
+    return (
+      <Image
+        style={{ width: "100px", height: "150px", objectFit: "cover" }}
+        src={getImageLocalHost(value)}
+      />
+    );
   };
 
   const statusCostom = (value) => {
@@ -55,11 +60,31 @@ const Employee = () => {
   return (
     <>
       <h1>Employee List</h1>
-      <div className="mb-3">
-        <button className="btn btn-primary" onClick={showModal}>
-          Add Employee
-        </button>
+      <div className="container-fluid mb-4">
+        <div className="row justify-content-between align-items-center">
+          <div className="col-auto">
+            <button className="btn btn-primary shadow-sm" onClick={showModal}>
+              <i className="fa-solid fa-plus me-2"></i> Add Employee
+            </button>
+          </div>
+          <div className="col-auto">
+            <div className="input-group">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Search employees..."
+              />
+              <button
+                className="btn btn-primary"
+                type="button"
+              >
+                <i className="fa-solid fa-search"></i> Search
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
+
       <AddEmployee
         openModel={openModel}
         setOpenModel={(value) => {
