@@ -1,16 +1,24 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React from "react";
 import { Image, Table, Tag } from "antd";
 import { useEmployee } from "./Hook/useEmployee";
-import { getImageUrl, getStatus } from "../../../Utils/Constant";
+import { getStatus, getImageLocalHost } from "../../../Utils/Constant";
 import { Link } from "react-router-dom";
 import AddEmployee from "./components/addEmployee";
 
 const Employee = () => {
-  const { columns, dataList, openModel, setOpenModel } = useEmployee();
+  const {
+    columns,
+    dataList,
+    openModel,
+    setOpenModel,
+    handleDelete,
+    edit,
+    setEdit,
+  } = useEmployee();
 
   const imageCustom = (value) => {
-    return <Image src={getImageUrl(value)} />;
+    return <Image style={{width: "100px" , height: "150px", objectFit: "cover"}} src={getImageLocalHost(value)} />;
   };
 
   const statusCostom = (value) => {
@@ -21,13 +29,19 @@ const Employee = () => {
     );
   };
 
-  const renderActions = (id) => {
+  const action = (record) => {
     return (
       <div className="d-flex justify-content-center">
-        <Link className="mx-3 text-success">
+        <Link
+          onClick={() => {
+            setEdit({ isEdit: true, data: record });
+            setOpenModel(true);
+          }}
+          className="mx-3 text-success"
+        >
           <i className="fa-solid fa-pen-to-square"></i>
         </Link>
-        <Link className="mx-3 text-danger">
+        <Link onClick={() => handleDelete(record)} className="mx-3 text-danger">
           <i className="fa-solid fa-trash"></i>
         </Link>
       </div>
@@ -46,12 +60,19 @@ const Employee = () => {
           Add Employee
         </button>
       </div>
-      <AddEmployee openModel={openModel} setOpenModel={setOpenModel} />
+      <AddEmployee
+        openModel={openModel}
+        setOpenModel={(value) => {
+          setOpenModel(value);
+          setEdit({ isEdit: false, data: {} });
+        }}
+        edit={edit}
+      />
       <Table
         columns={columns({
           imageCustom: imageCustom,
           statusCostom: statusCostom,
-          renderActions: renderActions,
+          action: action,
         })}
         dataSource={dataList}
         scroll={{

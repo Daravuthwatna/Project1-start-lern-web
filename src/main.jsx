@@ -5,9 +5,9 @@ import './index.css'
 import ProductContextProvider from './context/ProductContext.jsx'
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+  // <StrictMode>
     <ProductContextProvider>
       <App/>
     </ProductContextProvider>
-  </StrictMode>,
+  // </StrictMode>,
 )

@@ -1,18 +1,23 @@
 /* eslint-disable no-unused-vars */
 import moment from "moment";
 import { useEffect, useState } from "react";
+import { Modal } from "antd";
 import baseService from "../../../../services/baseService";
 
 export const useEmployee = () => {
   const [fixdTop, setFixedTop] = useState(false);
   const [dataList, setDataList] = useState([]);
   const [openModel, setOpenModel] = useState(false);
+  const [edit, setEdit] = useState({
+    isEdit: false,
+    data: {},
+  });
 
-  const columns = ({ imageCustom, statusCostom, renderActions, openModel, setOpenModel }) => {
+  const columns = ({ imageCustom, statusCostom, action }) => {
     return [
       {
         title: "Name",
-        width: 150,
+        width: 200,
         dataIndex: "FirstName",
         key: "FirstName",
         fixed: "left",
@@ -25,13 +30,13 @@ export const useEmployee = () => {
         dataIndex: "Image",
         key: "1",
         width: 150,
-        render: (record, text, index) => imageCustom(text.eImage),
+        render: (record, text, index) => imageCustom(text.Image),
       },
       {
         title: "Gender",
         dataIndex: "Gender",
         key: "2",
-        width: 150,
+        width: 100,
       },
       {
         title: "Date of Birth",
@@ -52,7 +57,7 @@ export const useEmployee = () => {
         title: "Email",
         dataIndex: "Email",
         key: "6",
-        width: 150,
+        width: 200,
       },
       {
         title: "Address",
@@ -64,7 +69,7 @@ export const useEmployee = () => {
         title: "Status",
         dataIndex: "Status",
         key: "8",
-        width: 150,
+        width: 100,
         render: (text, record, index) => {
           return statusCostom(text);
         },
@@ -83,19 +88,52 @@ export const useEmployee = () => {
         key: "operation",
         fixed: "right",
         width: 150,
-        render: (record, text, index) => renderActions(text.Id),
+        render: action,
       },
     ];
   };
 
   const fetchData = async () => {
-    const response = await baseService.get("http://localhost:8000/api/employee/get-list");
+    const response = await baseService.get(
+      "http://localhost:8000/api/employee/get-list"
+    );
     setDataList(response.data);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchData();
-  },[])
+  }, []);
 
-  return { columns, fixdTop, setFixedTop, dataList, openModel, setOpenModel };
+  const confirmDelete = async (id) => {
+    const response = await baseService.delete(
+      `http://localhost:8000/api/employee/delete`,
+      { id }
+    );
+    if (response) {
+      fetchData();
+    }
+  };
+
+  const handleDelete = (record, text, index) => {
+    Modal.confirm({
+      title: "Delete Employee",
+      content: "Are you sure you want to delete!",
+      onOk: () => confirmDelete(record.id),
+      onCancel: () => {},
+    });
+    console.log(record);
+  };
+
+  return {
+    columns,
+    fixdTop,
+    setFixedTop,
+    dataList,
+    openModel,
+    setOpenModel,
+    handleDelete,
+    edit,
+    setEdit,
+    fetchData
+  };
 };

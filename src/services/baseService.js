@@ -1,39 +1,42 @@
+import { message } from "antd";
 import axios from "axios";
 import LocalStorage from "../Utils/LocalStorage";
-import { message } from "antd";
 
 class BaseService {
-  async sendRequest(url, data, method, extraHander = {}, extraConfig = {}) {
+  async sendRequest(method, url, data, extraHeaders, extraConfig) {
     const requestOptions = {
       method: method,
       url: url,
       data: data,
-      headers: { Authorization: `bearre ${LocalStorage.getAccessToken()}`,...extraHander },
-      ...extraConfig
+      headers: {
+        authorization: `Bearer ${LocalStorage.getAccessToken()}`,
+        ...extraHeaders,
+      },
+      ...extraConfig,
     };
     try {
       const response = await axios(requestOptions);
       return response.data;
     } catch (error) {
-      message.error(error?.response?.data?.errors.msg || error.message, [1]);
+      message.error(error?.response?.data?.errors?.msg || error?.message, [1]);
       return null;
     }
   }
 
-  get(url, extraHander, extraConfig) {
-    return this.sendRequest(url, null, "get", extraHander, extraConfig);
+  get(url, data, extraHeaders, extraConfig) {
+    return this.sendRequest("get", url, data, extraHeaders, extraConfig);
   }
 
-  post(url, data, extraHander, extraConfig) {
-    return this.sendRequest(url, data, "post", extraHander, extraConfig);
+  post(url, data, extraHeaders, extraConfig) {
+    return this.sendRequest("post", url, data, extraHeaders, extraConfig);
   }
 
-  put(url, data, extraHander, extraConfig) {
-    return this.sendRequest(url, data, "put", extraHander, extraConfig);
+  put(url, data, extraHeaders, extraConfig) {
+    return this.sendRequest("put", url, data, extraHeaders, extraConfig);
   }
 
-  delete(url, data, extraHander, extraConfig) {
-    return this.sendRequest(url, data, "delete", extraHander, extraConfig);
+  delete(url, data, extraHeaders, extraConfig) {
+    return this.sendRequest("delete", url, data, extraHeaders, extraConfig);
   }
 }
 
