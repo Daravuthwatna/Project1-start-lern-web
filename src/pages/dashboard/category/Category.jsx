@@ -1,32 +1,32 @@
 import React from "react";
 import { Image, Table, Tag, Input } from "antd";
-import { useEmployee } from "./Hook/useEmployee";
-import { getStatus, getImageLocalHost } from "../../../Utils/Constant";
+import AddCategory from "./components/addCategory.jsx";
+import { useCategory } from "./Hook/useCategory.js";
+import { getImageLocalHost, getStatus } from "../../../Utils/Constant.js";
 import { Link } from "react-router-dom";
-import AddEmployee from "./components/addEmployee";
-import useDebounce from "../../../Utils/useDebounce";
+import useDebounce from "../../../Utils/useDebounce.js";
 
-const Employee = () => {
+const Category = () => {
   const {
-    columns,
-    dataList,
     openModel,
     setOpenModel,
-    handleDelete,
+    columns,
+    dataList,
+    fetchData,
     edit,
     setEdit,
-    fetchData,
+    handleDelete,
     searchName,
     setSearchName,
     pagination,
-  } = useEmployee();
+  } = useCategory();
 
   const debounce = useDebounce();
 
   const imageCustom = (value) => {
     return (
       <Image
-        style={{ width: "100px", height: "150px", objectFit: "cover" }}
+        style={{ width: "100px", height: "100px", objectFit: "cover" }}
         src={getImageLocalHost(value)}
       />
     );
@@ -52,25 +52,28 @@ const Employee = () => {
         >
           <i className="fa-solid fa-pen-to-square"></i>
         </Link>
-        <Link onClick={() => handleDelete(record)} className="mx-3 text-danger">
+        <Link
+          onClick={() => handleDelete(record)}
+          className="mx-3 text-danger"
+        >
           <i className="fa-solid fa-trash"></i>
         </Link>
       </div>
     );
   };
-
+  
   const showModal = () => {
     setOpenModel(true);
   };
 
   return (
     <>
-      <h1>Employee List</h1>
+      <h1>Category List</h1>
       <div className="container-fluid mb-4">
         <div className="row justify-content-between align-items-center">
           <div className="col-auto">
             <button className="btn btn-primary shadow-sm" onClick={showModal}>
-              <i className="fa-solid fa-plus me-2"></i> Add Employee
+              <i className="fa-solid fa-plus me-2"></i> Add Category
             </button>
           </div>
           <div className="col-auto">
@@ -78,7 +81,7 @@ const Employee = () => {
               <Input
                 type="text"
                 className="form-control"
-                placeholder="Search employees..."
+                placeholder="Search category..."
                 value={searchName}
                 onChange={(event) => {
                   setSearchName(event.target.value);
@@ -91,8 +94,7 @@ const Employee = () => {
           </div>
         </div>
       </div>
-
-      <AddEmployee
+      <AddCategory
         openModel={openModel}
         setOpenModel={(value) => {
           setOpenModel(value);
@@ -100,6 +102,7 @@ const Employee = () => {
         }}
         edit={edit}
         fetchData={fetchData}
+        categoryList={dataList}
       />
       <Table
         columns={columns({
@@ -125,4 +128,4 @@ const Employee = () => {
   );
 };
 
-export default Employee;
+export default Category;

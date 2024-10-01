@@ -9,7 +9,7 @@ import Category from "./pages/web/Category.jsx";
 import LayoutDB from "./layout/LayoutDB.jsx";
 import Dashboard from "./pages/dashboard/Dashboard.jsx";
 import Employee from "./pages/dashboard/employee/Employee.jsx";
-import Customer from "./pages/dashboard/customer/Customer.jsx";
+import Categorys from "./pages/dashboard/category/Category.jsx";
 import Products from "./pages/dashboard/prodduct/Product.jsx";
 import LoginDB from "./pages/dashboard/login/LoginDB.jsx";
 
@@ -50,8 +50,8 @@ const router = createBrowserRouter([
         element: <Employee />,
       },
       {
-        path: "/dashboard/customer",
-        element: <Customer />,
+        path: "/dashboard/category",
+        element: <Categorys />,
       },
       {
         path: "/dashboard/product",

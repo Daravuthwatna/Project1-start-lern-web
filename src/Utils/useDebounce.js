@@ -3,7 +3,7 @@ import { useRef } from "react";
 const useDebounce = () => {
   let timeoutId = useRef(null);
 
-  const debounce = (cbFun, delay = 1000) => {
+  const debounce = (cbFun, delay = 2000) => {
     if (timeoutId.current) {
       clearTimeout(timeoutId.current);
     }

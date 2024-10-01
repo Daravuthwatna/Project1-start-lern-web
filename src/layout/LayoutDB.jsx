@@ -6,7 +6,7 @@ import {
   MenuUnfoldOutlined,
   FolderOutlined,
   UserOutlined,
-  TeamOutlined,
+  ShoppingCartOutlined,
   HomeOutlined,
   LogoutOutlined,
 } from "@ant-design/icons";
@@ -33,9 +33,9 @@ const LayoutDB = () => {
       label: "Employee",
     },
     {
-      key: "/dashboard/customer",
-      icon: <TeamOutlined />,
-      label: "Customer",
+      key: "/dashboard/category",
+      icon: <ShoppingCartOutlined />,
+      label: "category",
     },
     {
       key: "/dashboard/product",

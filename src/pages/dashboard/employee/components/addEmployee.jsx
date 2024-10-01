@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Modal, Button, Select, Form, Input, DatePicker } from "antd";
 import baseService from "../../../../services/baseService";
 import moment from "moment";
-import { getImageLocalHost } from "../../../../Utils/Constant";
+import { getImageLocalHost, getStatus } from "../../../../Utils/Constant";
 
 const AddEmployee = ({ openModel, setOpenModel, edit, fetchData }) => {
   const [form] = Form.useForm();
@@ -65,7 +65,7 @@ const AddEmployee = ({ openModel, setOpenModel, edit, fetchData }) => {
         tel: edit.data.Tel,
         email: edit.data.Email,
         address: edit.data.Address,
-        status: edit.data.Status,
+        status: getStatus[edit.data.Status],
         image: edit.data.Image,
       });
     }

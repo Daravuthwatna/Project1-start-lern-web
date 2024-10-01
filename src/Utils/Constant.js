@@ -12,11 +12,6 @@ export const getGender = {
   0: "Female",
 }
 
-export const getRole = {
-  23:"IT",
-  1:"Admin"
-}
-
 export const getStatus = {
   1:"Active",
   0:"Inactive"
