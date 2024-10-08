@@ -10,7 +10,7 @@ import LayoutDB from "./layout/LayoutDB.jsx";
 import Dashboard from "./pages/dashboard/Dashboard.jsx";
 import Employee from "./pages/dashboard/employee/Employee.jsx";
 import Categorys from "./pages/dashboard/category/Category.jsx";
-import Products from "./pages/dashboard/prodduct/Product.jsx";
+import Products from "./pages/dashboard/product/Product.jsx";
 import LoginDB from "./pages/dashboard/login/LoginDB.jsx";
 
 import Error from "./pages/web/Error.jsx";

@@ -3,15 +3,16 @@ import { useEffect, useRef, useState } from "react";
 import baseService from "../../../../services/baseService";
 import moment from "moment";
 
-export const useCategory = () => {
+export const useProduct = () => {
   const [openModel, setOpenModel] = useState(false);
+  const [openModelUpload, setOpenModelUpload] = useState(false);
   const [dataList, setDataList] = useState([]);
-  const [parentList, setParentList] = useState([]);
+  const [categoryList, setCategoryList] = useState([]);
   const [searchName, setSearchName] = useState("");
   const [edit, setEdit] = useState({
     isEdit: false,
-    data: {}
-  })
+    data: {},
+  });
 
   const pagination = useRef({
     current: 1,
@@ -22,31 +23,57 @@ export const useCategory = () => {
   const columns = ({ imageCustom, statusCostom, action }) => {
     return [
       {
-        title: "Name",
+        title: "N",
         width: 100,
-        dataIndex: "Name",
+        dataIndex: "N",
         fixed: "left",
-        key: "1",
+        render: (record, text, index) => index + 1,
       },
       {
-        title: "Image",
-        dataIndex: "Image",
-        width: 100,
+        title: "Name",
+        width: 110,
+        dataIndex: "Name",
         fixed: "left",
-        key: "2",
-        render: (record, text, index) => imageCustom(text.Image),
       },
       {
         title: "Description",
         dataIndex: "Description",
-        width: 500,
-        key: "3",
+        width: 400,
+      },
+      {
+        title: "Quantity",
+        dataIndex: "Qty",
+        width: 100,
+      },
+      {
+        title: "Price",
+        dataIndex: "Price",
+        width: 100,
+      },
+      {
+        title: "DiscountPercent",
+        dataIndex: "DiscountPercent",
+        width: 150,
+      },
+      {
+        title: "DiscountAmount",
+        dataIndex: "DiscountAmount",
+        width: 150,
+      },
+      {
+        title: "NetPrice",
+        dataIndex: "NetPrice",
+        width: 100,
+      },
+      {
+        title: "CreateBy",
+        dataIndex: "CreateBy",
+        width: 100,
       },
       {
         title: "Status",
         dataIndex: "Status",
-        width: 50,
-        key: "4",
+        width: 100,
         render: (text, record, index) => {
           return statusCostom(text);
         },
@@ -54,8 +81,7 @@ export const useCategory = () => {
       {
         title: "CreateAd",
         dataIndex: "CreateAd",
-        width: 100,
-        key: "5",
+        width: 150,
         render: (record, text, index) => {
           return moment(text.CreateAd).format("MMM-Do-YYYY");
         },
@@ -63,8 +89,7 @@ export const useCategory = () => {
       {
         title: "Action",
         fixed: "left",
-        width: 50,
-        key: "6",
+        width: 200,
         align: "center",
         fixed: "right",
         render: action,
@@ -72,14 +97,14 @@ export const useCategory = () => {
     ];
   };
 
-  const fetchParentCategory = async () => {
+  const fetchCategory = async () => {
     let API = "http://localhost:8000/api/category/get-list";
     const res = await baseService.get(API);
-    setParentList(res.data);
+    setCategoryList(res.data);
   }
-  
+
   const fetchData = async (search = "") => {
-    let API = "http://localhost:8000/api/category/get-list";
+    let API = "http://localhost:8000/api/product/get-list";
     API += `?page=${pagination.current.current}&limit=${pagination.current.pageSize}`;
     if (search) {
       API += `&search_name=${search}`;
@@ -92,12 +117,12 @@ export const useCategory = () => {
 
   useEffect(() => {
     fetchData();
-    fetchParentCategory();
+    fetchCategory();
   }, [searchName]);
 
   const confirmDelete = async (id) => {
     const response = await baseService.delete(
-      `http://localhost:8000/api/category/delete`,
+      `http://localhost:8000/api/product/delete`,
       { id }
     );
     if (response) {
@@ -107,7 +132,7 @@ export const useCategory = () => {
 
   const handleDelete = (record, text, index) => {
     Modal.confirm({
-      title: "Delete Category",
+      title: "Delete Product",
       content: "Are you sure you want to delete!",
       onOk: () => confirmDelete(record.id),
       onCancel: () => {},
@@ -126,6 +151,8 @@ export const useCategory = () => {
     searchName,
     setSearchName,
     pagination,
-    parentList,
+    categoryList,
+    openModelUpload,
+    setOpenModelUpload,
   };
 };

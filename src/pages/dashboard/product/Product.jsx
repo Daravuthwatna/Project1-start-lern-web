@@ -1,12 +1,13 @@
 import React from "react";
-import { Image, Table, Tag, Input } from "antd";
-import AddCategory from "./components/addCategory.jsx";
-import { useCategory } from "./Hook/useCategory.js";
+import { Image, Table, Tag, Input, Button } from "antd";
+import AddProduct from "./components/addProduct.jsx";
+import UploadImage from "./components/uploadImage.jsx";
 import { getImageLocalHost, getStatus } from "../../../Utils/Constant.js";
 import { Link } from "react-router-dom";
-import useDebounce from "../../../Utils/useDebounce.js";
+import { useProduct } from "./Hook/useProduct.js";
+import useDebounce from "../../../Utils/useDebounce";
 
-const Category = () => {
+const Product = () => {
   const {
     openModel,
     setOpenModel,
@@ -16,11 +17,13 @@ const Category = () => {
     edit,
     setEdit,
     handleDelete,
+    categoryList,
     searchName,
     setSearchName,
     pagination,
-    parentList,
-  } = useCategory();
+    openModelUpload,
+    setOpenModelUpload,
+  } = useProduct();
 
   const debounce = useDebounce();
 
@@ -35,7 +38,7 @@ const Category = () => {
 
   const statusCostom = (value) => {
     return (
-      <Tag color={getStatus[value] == 1 ? "red" : "green"}>
+      <Tag color={getStatus[value] === 1 ? "red" : "green"}>
         {getStatus[value]}
       </Tag>
     );
@@ -44,6 +47,7 @@ const Category = () => {
   const action = (record) => {
     return (
       <div className="d-flex justify-content-center">
+        <Button onClick={showModalUpload}>Upload Image</Button>
         <Link
           onClick={() => {
             setEdit({ isEdit: true, data: record });
@@ -53,28 +57,29 @@ const Category = () => {
         >
           <i className="fa-solid fa-pen-to-square"></i>
         </Link>
-        <Link
-          onClick={() => handleDelete(record)}
-          className="mx-3 text-danger"
-        >
+        <Link onClick={() => handleDelete(record)} className="mx-3 text-danger">
           <i className="fa-solid fa-trash"></i>
         </Link>
       </div>
     );
   };
-  
+
   const showModal = () => {
     setOpenModel(true);
   };
 
+  const showModalUpload = () => {
+    setOpenModelUpload(true);
+  };
+
   return (
     <>
-      <h1>Category List</h1>
+      <h1>Product List</h1>
       <div className="container-fluid mb-4">
         <div className="row justify-content-between align-items-center">
           <div className="col-auto">
             <button className="btn btn-primary shadow-sm" onClick={showModal}>
-              <i className="fa-solid fa-plus me-2"></i> Add Category
+              <i className="fa-solid fa-plus me-2"></i> Add Product
             </button>
           </div>
           <div className="col-auto">
@@ -82,7 +87,7 @@ const Category = () => {
               <Input
                 type="text"
                 className="form-control"
-                placeholder="Search category..."
+                placeholder="Search Product..."
                 value={searchName}
                 onChange={(event) => {
                   setSearchName(event.target.value);
@@ -95,7 +100,7 @@ const Category = () => {
           </div>
         </div>
       </div>
-      <AddCategory
+      <AddProduct
         openModel={openModel}
         setOpenModel={(value) => {
           setOpenModel(value);
@@ -103,8 +108,12 @@ const Category = () => {
         }}
         edit={edit}
         fetchData={fetchData}
-        categoryList={dataList}
-        parentList={parentList}
+        productList={dataList}
+        categoryList={categoryList}
+      />
+      <UploadImage
+        openModelUpload={openModelUpload}
+        setOpenModelUpload={setOpenModelUpload}
       />
       <Table
         columns={columns({
@@ -113,21 +122,19 @@ const Category = () => {
           action: action,
         })}
         dataSource={dataList}
-        scroll={{
-          x: 1500,
-        }}
-        onChange={(_pagination) => {
-          pagination.current.current = _pagination.current;
-          fetchData();
-        }}
+        scroll={{ x: 2000 }}
         pagination={{
           current: pagination.current.current,
           pageSize: pagination.current.pageSize,
           total: pagination.current.totalRecode,
+        }}
+        onChange={(_pagination) => {
+          pagination.current.current = _pagination.current;
+          fetchData();
         }}
       />
     </>
   );
 };
 
-export default Category;
+export default Product;

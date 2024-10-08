@@ -6,7 +6,7 @@ import { getImageLocalHost, getStatus } from "../../../../Utils/Constant";
 const AddCategory = ({
   openModel,
   setOpenModel,
-  categoryList,
+  parentList,
   edit,
   fetchData,
 }) => {
@@ -14,6 +14,13 @@ const AddCategory = ({
   const [previewImg, setPreviewImg] = useState(null);
 
   const onFinish = async (value) => {
+    let statusValue = value.status;
+    if (typeof statusValue === "string") {
+      statusValue = Object.keys(getStatus).find(
+        (key) => getStatus[key] === statusValue
+      );
+    }
+
     if (edit.isEdit) {
       const formData = new FormData();
       formData.append("name", value.name);
@@ -58,7 +65,7 @@ const AddCategory = ({
       form.setFieldsValue({
         name: edit.data.Name,
         description: edit.data.Description,
-        status: getStatus[edit.data.Status],
+        status: edit.data.Status,
         parentsId: edit.data.ParentsId,
         image: edit.data.Image,
       });
@@ -74,11 +81,11 @@ const AddCategory = ({
   };
 
   const listOption = useMemo(() => {
-    return categoryList?.map((item) => ({
+    return parentList?.map((item) => ({
       value: item.id,
       label: item.Name,
     }));
-  }, [categoryList]);
+  }, [parentList]);
 
   return (
     <Modal
@@ -108,7 +115,6 @@ const AddCategory = ({
           rules={[
             {
               required: true,
-              message: "Please input the category name!",
             },
           ]}
         >
@@ -127,7 +133,6 @@ const AddCategory = ({
           rules={[
             {
               required: true,
-              message: "Please select the status!",
             },
           ]}
         >
@@ -149,7 +154,6 @@ const AddCategory = ({
           rules={[
             {
               required: true,
-              message: "Please select an image!",
             },
           ]}
         >

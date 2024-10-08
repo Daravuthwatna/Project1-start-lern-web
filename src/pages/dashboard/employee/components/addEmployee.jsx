@@ -9,6 +9,13 @@ const AddEmployee = ({ openModel, setOpenModel, edit, fetchData }) => {
   const [previewImg, setPreviewImg] = useState(null);
 
   const onFinish = async (values) => {
+    let statusValue = values.status;
+    if (typeof statusValue === "string") {
+      statusValue = Object.keys(getStatus).find(
+        (key) => getStatus[key] === statusValue
+      );
+    }
+
     if (edit.isEdit) {
       const formData = new FormData();
       formData.append("image", values.image);
@@ -19,7 +26,7 @@ const AddEmployee = ({ openModel, setOpenModel, edit, fetchData }) => {
       formData.append("tel", values.tel);
       formData.append("email", values.email);
       formData.append("address", values.address);
-      formData.append("status", values.status);
+      formData.append("status", Number(statusValue));
       formData.append("id", edit.data.id);
       formData.append("imageOld", edit.data.Image);
       const result = await baseService.put(
@@ -41,7 +48,7 @@ const AddEmployee = ({ openModel, setOpenModel, edit, fetchData }) => {
       formData.append("tel", values.tel);
       formData.append("email", values.email);
       formData.append("address", values.address);
-      formData.append("status", values.status);
+      formData.append("status", Number(statusValue));
       formData.append("image", values.image);
       const result = await baseService.post(
         "http://localhost:8000/api/employee/create",
@@ -229,15 +236,13 @@ const AddEmployee = ({ openModel, setOpenModel, edit, fetchData }) => {
         >
           {/* // =========== Image Preview ========= */}
           {edit.isEdit && !previewImg && (
-              <img
-                style={{ width: "300px" }}
-                src={getImageLocalHost(edit.data.Image)}
-              />
-            )}
-            {previewImg && (
-              <img style={{ width: "300px" }} src={previewImg} />
-            )}
-            <input type="file" onChange={handleImage} />
+            <img
+              style={{ width: "300px" }}
+              src={getImageLocalHost(edit.data.Image)}
+            />
+          )}
+          {previewImg && <img style={{ width: "300px" }} src={previewImg} />}
+          <input type="file" onChange={handleImage} />
         </Form.Item>
         <Form.Item
           wrapperCol={{

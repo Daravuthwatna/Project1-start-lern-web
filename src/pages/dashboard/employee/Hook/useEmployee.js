@@ -16,7 +16,7 @@ export const useEmployee = () => {
   const pagination = useRef({
     current: 1,
     pageSize: 3,
-    totalRecode: 10,
+    totalRecode: 0,
   });
 
   const columns = ({ imageCustom, statusCostom, action }) => {
@@ -105,9 +105,10 @@ export const useEmployee = () => {
     if (search) {
       API += `&search_name=${search}`;
     }
-    const response = await baseService.get(API);
-    setDataList(response.data);
-    pagination.current.totalRecord = response.data.totalRecord;
+
+    const res = await baseService.get(API);
+    setDataList(res.data);
+    pagination.current.totalRecode = res.totalRecord;
   };
 
   useEffect(() => {
