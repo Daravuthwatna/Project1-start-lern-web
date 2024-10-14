@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Button, Select, Form, Input, DatePicker } from "antd";
+import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import baseService from "../../../../services/baseService";
 import moment from "moment";
 import { getImageLocalHost, getStatus } from "../../../../Utils/Constant";
@@ -27,6 +28,7 @@ const AddEmployee = ({ openModel, setOpenModel, edit, fetchData }) => {
       formData.append("email", values.email);
       formData.append("address", values.address);
       formData.append("status", Number(statusValue));
+      formData.append("password", values.password);
       formData.append("id", edit.data.id);
       formData.append("imageOld", edit.data.Image);
       const result = await baseService.put(
@@ -50,6 +52,7 @@ const AddEmployee = ({ openModel, setOpenModel, edit, fetchData }) => {
       formData.append("address", values.address);
       formData.append("status", Number(statusValue));
       formData.append("image", values.image);
+      formData.append("password", values.password);
       const result = await baseService.post(
         "http://localhost:8000/api/employee/create",
         formData,
@@ -74,6 +77,7 @@ const AddEmployee = ({ openModel, setOpenModel, edit, fetchData }) => {
         address: edit.data.Address,
         status: getStatus[edit.data.Status],
         image: edit.data.Image,
+        password: edit.data.Password,
       });
     }
   }, [edit, form]);
@@ -138,6 +142,23 @@ const AddEmployee = ({ openModel, setOpenModel, edit, fetchData }) => {
           ]}
         >
           <Input />
+        </Form.Item>
+        {/* // =========== Password ========= */}
+        <Form.Item
+          label="Password"
+          name="password"
+          rules={[
+            {
+              required: true,
+              message: "Please input your Password!",
+            },
+          ]}
+        >
+          <Input.Password
+            iconRender={(visible) =>
+              visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+            }
+          />
         </Form.Item>
         {/* // =========== Gender ========= */}
         <Form.Item

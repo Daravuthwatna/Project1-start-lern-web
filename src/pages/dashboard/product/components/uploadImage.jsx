@@ -1,19 +1,38 @@
-import { Button, Form, Modal, Upload } from "antd";
+import { Button, Form, Modal, message } from "antd";
 import React, { useState } from "react";
+import baseService from "../../../../services/baseService";
 
-const UploadImage = ({ openModelUpload, setOpenModelUpload }) => {
+const UploadImage = ({
+  openModelUpload,
+  setOpenModelUpload,
+  uploadProductId,
+}) => {
   const [form] = Form.useForm();
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [imagePreviews, setImagePreviews] = useState([]);
 
-  const onFinish = (values) => {
-    setOpenModelUpload(false);
+  const onFinish = async () => {
+    const formData = new FormData();
+    selectedFiles.forEach((file) => {
+      formData.append("image", file);
+    });
+    formData.append("productId", uploadProductId);
+    formData.append("updateBy", 66);
+    formData.append("createBy", 66);
+    const result = await baseService.post(
+      `http://localhost:8000/api/product/upload`,
+      formData,
+      { headers: { "Content-Type": "multipart/form-data" } }
+    );
+    console.log(result);
   };
 
   const handleUpload = (event) => {
     const files = Array.from(event.target.files);
+    const newSelectedFiles = [...selectedFiles, ...files];
+
     if (files.length + selectedFiles.length > 3) {
-      message.error("You can only upload a maximum of 5 images.");
+      message.error("You can only upload a maximum of 3 images.");
       form.setFields([
         {
           name: "images",
@@ -22,9 +41,8 @@ const UploadImage = ({ openModelUpload, setOpenModelUpload }) => {
       ]);
       return;
     }
-    const newSelectedFiles = [...selectedFiles, ...files];
     setSelectedFiles(newSelectedFiles);
-
+    form.setFieldValue("images", newSelectedFiles);
     const previews = newSelectedFiles.map((file) => URL.createObjectURL(file));
     setImagePreviews(previews);
   };
@@ -37,13 +55,18 @@ const UploadImage = ({ openModelUpload, setOpenModelUpload }) => {
       footer={null}
       width={600}
     >
-      <Form onFinish={onFinish}>
+      <Form form={form} onFinish={onFinish}>
         <Form.Item
-          name="image"
+          name="images"
           label="Select Image"
-          rules={[{ required: true, message: "Please upload an image!" }]}
+          rules={[{ required: true }]}
         >
-          <input type="file" onChange={handleUpload} />
+          <input
+            multiple
+            accept="image/*"
+            type="file"
+            onChange={handleUpload}
+          />
           <div>
             {imagePreviews.length > 0 && (
               <div style={{ display: "flex", flexWrap: "wrap" }}>

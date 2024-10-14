@@ -13,6 +13,7 @@ export const useProduct = () => {
     isEdit: false,
     data: {},
   });
+  const [uploadProductId, setUploadProductId] = useState(0);
 
   const pagination = useRef({
     current: 1,
@@ -20,7 +21,7 @@ export const useProduct = () => {
     totalRecode: 0,
   });
 
-  const columns = ({ imageCustom, statusCostom, action }) => {
+  const columns = ({ statusCostom, action, imageCustom }) => {
     return [
       {
         title: "N",
@@ -34,6 +35,13 @@ export const useProduct = () => {
         width: 110,
         dataIndex: "Name",
         fixed: "left",
+      },
+      {
+        title: "Image",
+        dataIndex: "image",
+        key: "1",
+        width: 150,
+        render: (record, text, index) => imageCustom(text.Image),
       },
       {
         title: "Description",
@@ -101,7 +109,7 @@ export const useProduct = () => {
     let API = "http://localhost:8000/api/category/get-list";
     const res = await baseService.get(API);
     setCategoryList(res.data);
-  }
+  };
 
   const fetchData = async (search = "") => {
     let API = "http://localhost:8000/api/product/get-list";
@@ -111,7 +119,14 @@ export const useProduct = () => {
     }
 
     const res = await baseService.get(API);
-    setDataList(res.data);
+    setDataList(
+      res.data.map((item) => {
+        return {
+          ...item,
+          key: item.id,
+        };
+      })
+    );
     pagination.current.totalRecode = res.totalRecord;
   };
 
@@ -154,5 +169,7 @@ export const useProduct = () => {
     categoryList,
     openModelUpload,
     setOpenModelUpload,
+    uploadProductId,
+    setUploadProductId,
   };
 };

@@ -86,7 +86,14 @@ export const useCategory = () => {
     }
 
     const res = await baseService.get(API);
-    setDataList(res.data);
+    setDataList(
+      res.data.map((item) => {
+        return {
+          ...item,
+          key: item.id,
+        };
+      })
+    );
     pagination.current.totalRecode = res.totalRecord;
   };
 

@@ -23,16 +23,18 @@ const Product = () => {
     pagination,
     openModelUpload,
     setOpenModelUpload,
+    uploadProductId,
+    setUploadProductId,
   } = useProduct();
 
   const debounce = useDebounce();
 
   const imageCustom = (value) => {
+    const _value = value.map((item) => getImageLocalHost(item));
     return (
-      <Image
-        style={{ width: "100px", height: "100px", objectFit: "cover" }}
-        src={getImageLocalHost(value)}
-      />
+      <Image.PreviewGroup items={_value}>
+        <Image src={getImageLocalHost(value[0])} />
+      </Image.PreviewGroup>
     );
   };
 
@@ -47,7 +49,14 @@ const Product = () => {
   const action = (record) => {
     return (
       <div className="d-flex justify-content-center">
-        <Button onClick={showModalUpload}>Upload Image</Button>
+        <Button
+          onClick={() => {
+            setOpenModelUpload(true);
+            setUploadProductId(record.id);
+          }}
+        >
+          Upload Image
+        </Button>
         <Link
           onClick={() => {
             setEdit({ isEdit: true, data: record });
@@ -68,7 +77,7 @@ const Product = () => {
     setOpenModel(true);
   };
 
-  const showModalUpload = () => {
+  const showModelUpload = () => {
     setOpenModelUpload(true);
   };
 
@@ -114,6 +123,7 @@ const Product = () => {
       <UploadImage
         openModelUpload={openModelUpload}
         setOpenModelUpload={setOpenModelUpload}
+        uploadProductId={uploadProductId}
       />
       <Table
         columns={columns({

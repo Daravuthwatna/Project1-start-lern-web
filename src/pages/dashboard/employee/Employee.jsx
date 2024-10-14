@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, Table, Tag, Input } from "antd";
+import { Image, Table, Tag, Input, Button } from "antd";
 import { useEmployee } from "./Hook/useEmployee";
 import { getStatus, getImageLocalHost } from "../../../Utils/Constant";
 import { Link } from "react-router-dom";
@@ -58,6 +58,14 @@ const Employee = () => {
       </div>
     );
   };
+
+  const passwordEdit = () => {
+    return (
+      <div className="d-flex justify-content-center">
+
+      </div>
+    )
+  }
 
   const showModal = () => {
     setOpenModel(true);
